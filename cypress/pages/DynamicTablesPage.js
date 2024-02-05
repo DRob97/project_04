@@ -34,7 +34,7 @@ class DynamicTablesPage {
         purpose === 'X' ? this.getXButton().click()
         : this.getBtns().contains(purpose).click()
     }
-    // Below is trouble
+    // Below is trouble                                                 // Try switch
     getModalInputBoxesById(id){
         this.getModalInputBoxes().then(($el) => {
             cy.wrap($el).should('have.attr', 'id', id.toLowerCase())
