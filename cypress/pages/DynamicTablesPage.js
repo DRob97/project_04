@@ -8,6 +8,14 @@ class DynamicTablesPage {
         return cy.get('#add_product_btn, #submit')
     }
 
+    getTableHeaders(){
+        return cy.get('.header')
+    }
+
+    getTableData(){
+        return cy.get('td')
+    }
+
     getXButton(){
         return cy.get('.delete')
     }
@@ -20,13 +28,32 @@ class DynamicTablesPage {
         return cy.get('.modal-card')
     }
 
+    getModalCardHead(){
+        return cy.get('.modal-card-head')
+    }
+
     getModalLabels(text){
-        // return cy.get('label[for]')
         return cy.contains(text)
     }
-    // Below is trouble
-    getModalInputBoxes(){
-        return cy.get('#quantity, #product, #price')
+    
+    getQuantityInputBox(){
+        return cy.get('#quantity')
+    }
+
+    getProductInputBox(){
+        return cy.get('#product')
+    }
+
+    getPriceInputBox(){
+        return cy.get('#price')
+    }
+
+    getNewProduct(){
+        return cy.get('tbody > tr').last().children()
+    }
+
+    getTable(){
+        return cy.get('#product_table')
     }
 
     // Methods
@@ -34,15 +61,19 @@ class DynamicTablesPage {
         purpose === 'X' ? this.getXButton().click()
         : this.getBtns().contains(purpose).click()
     }
-    // Below is trouble                                                 // Try switch
-    getModalInputBoxesById(id){
-        this.getModalInputBoxes().then(($el) => {
-            cy.wrap($el).should('have.attr', 'id', id.toLowerCase())
-        })
+    
+    getModalInputBoxes(purpose){
+        switch(purpose){
+            case 'Quantity':
+                return this.getQuantityInputBox()
+            case 'Product':
+                return this.getProductInputBox()
+            case 'Price':
+                return this.getPriceInputBox()
+            default:
+                throw new Error(`${purpose} input box not found`)
+        }
     }
-
 }
 
 module.exports = DynamicTablesPage
-
-// return  cy.get(`#${id.toLowercase()}`)
